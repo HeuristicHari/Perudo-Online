@@ -2,25 +2,43 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>MultiPlayer Snake</title>
+  <title>Perudo</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+
 <style>
-#gameScreen {
+#lobby {
   display: none;
 }
+#gameScreen {
+  display:none;
+}
+#hostPre{
+  display:none;
+}
+#basicBid{
+  display:none;
+}
+#diceContainer{
+  display:none;
+}
+
 </style>
 </head>
-<body>
-  <section class="vh-100">
-    <div class="container h-100">
+<body style="background-color:#18313a">
 
+  
+   
       <div id="initialScreen" class="h-100">
         <div class="d-flex flex-column align-items-center justify-content-center h-100">
-            <h1>Multiplayer Snake</h1>
+            <h1 style="color: #ADD8E6">Perudo Online</h1>
             <button
               type="submit"
               class="btn btn-success"
+              style="background-color: #B76E79; border-color: #B76E79"
               id="newGameButton"
             >
               Create New Game
@@ -32,26 +50,203 @@
             <button
               type="submit"
               class="btn btn-success"
+              style="background-color: #B76E79; border-color: #B76E79"
               id="joinGameButton"
             >
               Join Game
             </button>
+
+            
+              
+
+
+
         </div>
       </div>
 
-      <div id="gameScreen" class="h-100">
+
+      <div id="lobby" class= "h-100" >
+       
         <div class="d-flex flex-column align-items-center justify-content-center h-100">
 
-          <h1>Your game code is: <span id="gameCodeDisplay"></span></h1>
 
-          <canvas id="canvas"></canvas>
+          <span id="boxTop" style="color: #ADD8E6; background-color:#8e4162"> Join Code: <span id="gameCodeDisplay"></span></span>
+          
+
+          
+
+        
+          
+
+          <canvas id="canvas" width="1300" height="810"></canvas>
+          
+          
+        </div>
+
+      
+
+
+      </div>
+
+
+
+      <div id="hostPre" class= "h-100" >
+        <div class="d-flex flex-column align-items-center justify-content-center h-100">
+
+          <div class="d-flex float-left flex-column justify-content-center h-100">
+
+            <nav class="navbar  navbar-light">
+              <div class="container-fluid ">
+               
+                <button class="mx-auto navbar-toggler" style="background-color: #470a0a" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon " style="background-color:#470a0a" ></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                  <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                   
+                    <p class="text-center" style="color: #ADD8E6">High Hand</p>
+                    
+  
+                    <div class="btn-group" role="group" aria-label="Basic example">
+                      <button type="button" style="background-color:#B76E79" id="hhOn" class="btn btn-secondary">On</button>
+                      
+                      <button type="button" style="background-color:#470a0a" id="hhOff" class="btn btn-secondary">Off</button>
+                    </div>
+
+                    <p class="text-center" style="color: #ADD8E6">Ones Wild?</p>
+
+
+                    <div class="btn-group" role="group" aria-label="Basic example">
+                      <button type="button" style="background-color:#470a0a" id="oneWild" class="btn btn-secondary">On</button>
+                      
+                      <button type="button" style="background-color:#B76E79" id="oneTame" class="btn btn-secondary">Off</button>
+                    </div>
+
+                    <p class="text-center" style="color: #ADD8E6">Starting Dice</p>
+
+
+                    <div class="btn-group" role="group" aria-label="Basic example">
+                      <button type="button" style="background-color:#470a0a" id="dieStartOne" class="btn btn-secondary">1</button>
+                      
+                      <button type="button" style="background-color:#B76E79" id="dieStartThree" class="btn btn-secondary">3</button>
+
+                      <button type="button" style="background-color:#470a0a" id="dieStartFive" class="btn btn-secondary">5</button>
+
+                      <button type="button" style="background-color:#470a0a" id="dieStartTen" class="btn btn-secondary">10</button>
+
+                    </div>
+
+                    <p class="text-center" style="color: #ADD8E6">Dice to Bust</p>
+
+                    <div class="btn-group" role="group" aria-label="Basic example">
+                      <button type="button" style="background-color:#470a0a" id="diePlusOne" class="btn btn-secondary">+1 (SD) </button>
+                      
+                      <button type="button" style="background-color:#B76E79" id="diePlusThree" class="btn btn-secondary">+3 (Short) </button>
+
+                      <button type="button" style="background-color:#470a0a" id="diePlusFive" class="btn btn-secondary">+5 (Medium)</button>
+
+                      <button type="button" style="background-color:#470a0a" id="diePlusSeven" class="btn btn-secondary">+7 (Long) </button>
+
+                    </div>
+                    
+                      
+                      
+                      
+                  </ul>
+                </div>
+              </div>
+            </nav>
+          
+        </div>
+          <button
+          type="submit"
+          class="btn btn-success"
+          style="background-color: #B76E79; border-color: #B76E79"
+          id="startGameButton"
+        >
+          Start Game
+        </button>
         </div>
       </div>
 
-    </div>
-  </section>
+      
+    <div class = "panel-footer text-center">
+      <div class="container">
+      
+      <span id="gameScreen" class="h-100 float-left col-4 " display="flex">
+            
+          <!-- <button
+          type="submit"
+          class="btn btn-success"
+          id="bsButton"
+        >
+          BS
+        </button> -->
+        
+        <img src="Images/BS.png" alt="BS" id="bsButton" role="button">
+        
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
-  <script src="index.js"></script>
+        <!-- <button
+          type="submit"
+          class="btn btn-success"
+          id="hhButton"
+        >
+          HH
+        </button>  -->
+
+       &ensp; &ensp; &ensp;
+        
+        <img src="Images/hand.png" alt="HH" id="hhButton" role="button">
+<!-- this shit needs to get moved to el fucking right -->        
+      </span>
+
+    
+      <span id="diceContainer" class= "h-100 inline-block col-4">
+          <canvas id="diceCanvas" width="335" height="170"></canvas>
+          <!-- <button
+          type="submit"
+          class="btn btn-success"
+          id="olalButton"
+          >
+          zcuh
+          </button>   -->
+      </span>
+       
+
+      <span id="basicBid" class="float-right col-4" display="inline-block" >
+        <div class="form-group">
+          <input type="number" placeholder="#" id="numInput" min="1" max="30"/>
+        </div>
+        <div class="form-group">
+          <input type="number" placeholder="D" id="dieInput" min="1" max="6"/>
+        </div>
+        
+        <button
+        type="submit"
+        class="btn btn-success"
+        style="background-color: #0CCE6B; border-color: #0CCE6B"
+        id="passTurn"
+        >
+        Make Bid
+        </button>
+        
+      </span>
+
+     
+
+      </div>
+     
+    </div>
+  </div>
+
+
+
+
+
+  
+
+
+  <script src="https://cdn.socket.io/socket.io-3.0.0.js"></script>
+  <script type="module" src="index.js"></script>
 </body>
 </html>

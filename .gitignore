@@ -38,7 +38,9 @@ bower_components
 build/Release
 
 # Dependency directories
-node_modules/
+*/node_modules/
+*/Sounds/
+*/Images/
 jspm_packages/
 
 # Snowpack dependency directory (https://snowpack.dev/)
@@ -114,3 +116,6 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+#alright idk what is above but i will include this
+
