@@ -39,8 +39,7 @@ build/Release
 
 # Dependency directories
 */node_modules/
-*/Sounds/
-*/Images/
+
 jspm_packages/
 
 # Snowpack dependency directory (https://snowpack.dev/)
@@ -118,4 +117,5 @@ dist
 .pnp.*
 
 #alright idk what is above but i will include this
-
+# */Sounds/
+# */Images/
