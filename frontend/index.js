@@ -260,6 +260,7 @@ function handleRollDice(orders){
    
     tmpDie.onload= () => {ctx2.drawImage(tmpDie,5+c*55 ,5+r*55 )}
     dispDiceArray.push(tmpDie)
+    //oz
   }
 }
 
