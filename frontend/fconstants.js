@@ -38,76 +38,58 @@ const bigIndex=
 
 ]
 
-let dudu=new Audio ();
+
 
 let bidSon = new Audio("Sounds/bid.wav");
-bidSon.autoplay="";
-bidSon.muted="";
-bidSon.playsinline="";
+
 
 
 let bsSon = new Audio("Sounds/bs.wav");
-bsSon.autoplay="";
-bsSon.muted="";
-bsSon.playsinline="";
+
 
 let dangSon = new Audio("Sounds/dang.wav");
-dangSon.autoplay="";
-dangSon.muted="";
-dangSon.playsinline="";
+
 
 let deathSon = new Audio ("Sounds/deathContinue.wav")
-deathSon.autoplay="";
-deathSon.muted="";
-deathSon.playsinline="";
+
 
 let dingSon = new Audio ("Sounds/ding.wav")
-dingSon.autoplay="";
-dingSon.muted="";
-dingSon.playsinline="";
+
 
 let hhSon = new Audio ("Sounds/highHand.wav")
-hhSon.autoplay="";
-hhSon.muted="";
-hhSon.playsinline="";
+
 
 let rerollSon = new Audio ("Sounds/reRoll.wav")
-rerollSon.autoplay="";
-rerollSon.muted="";
-rerollSon.playsinline="";
+
 
 let startgameSon = new Audio ("Sounds/startGame.wav")
-startgameSon.autoplay="";
-startgameSon.muted="";
-startgameSon.playsinline="";
+
 
 let thudSon = new Audio ("Sounds/thud.wav")
-thudSon.autoplay="";
-thudSon.muted="";
-thudSon.playsinline="";
+
 
 let thud2Son = new Audio ("Sounds/thud2.wav")
-thud2Son.autoplay="";
-thud2Son.muted="";
-thud2Son.playsinline="";
+
 
 let thud3Son = new Audio ("Sounds/thud3.wav")
-thud3Son.autoplay="";
-thud3Son.muted="";
-thud3Son.playsinline="";
+
 
 
 let gameWin = new Audio ("Sounds/gameWin.wav")
-gameWin.autoplay="";
-gameWin.muted="";
-gameWin.playsinline="";
+
 
 let gameLoss = new Audio ("Sounds/gameLoss.wav")
-gameLoss.autoplay="";
-gameLoss.muted="";
-gameLoss.playsinline="";
+
 
 const sounds = [bidSon, bsSon, dangSon, deathSon, dingSon, hhSon, rerollSon, startgameSon, thudSon, thud2Son, thud3Son, gameWin, gameLoss]
+
+for (let j=0; j<sounds.length; j++){
+    let i=sounds[j];
+    i.autoplay="";
+    i.muted="";
+    i.playsinline=""
+    i.load();
+}
 
 const vicImg = new Image();
 vicImg.src='Images/Victory.png';
