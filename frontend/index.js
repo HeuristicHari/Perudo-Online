@@ -54,7 +54,7 @@ const passTurn = document.getElementById("passTurn");
 const bsButton=document.getElementById("bsButton");
 const hhButton=document.getElementById("hhButton");
 
-const troll=document.getElementById("troll");
+
 
 
 const boxTop=document.getElementById("boxTop");
@@ -110,7 +110,7 @@ diePlusThree.addEventListener('click', fDiePlusThree);
 diePlusFive.addEventListener('click', fDiePlusFive);
 diePlusSeven.addEventListener('click', fDiePlusSeven);
 
-troll.addEventListener('click', () => {sounds[13].play()})
+
 
 
 let canvas, ctx;
@@ -135,23 +135,33 @@ function joinGame() {
 
   
   const test = sounds[13].play();
-  if (test!==undefined){
-    test.then (()=>{}).catch((error)=>troll.display="block")
-  }
+ 
 
   socket.emit('joinGame', code);
   init();
 }
 function startGame(){
-  let silentSound = new Audio("Sounds/silence.wav");
-  silentSound.autoplay="";
-  silentSound.muted="";
-  silentSound.playsinline="";
-  silentSound.play();
+  var playPromise = sounds[13].play();
+
+  // In browsers that don’t yet support this functionality,
+  // playPromise won’t be defined.
+  if (playPromise !== undefined) {
+      playPromise.then(function() {
+          // Automatic playback started!
+      }).catch(function(error) {
+          console.log(error);
+          console.log("try to reload");
+          sounds[13].load();
+          sounds[13].song.play();
+      });
+  }
+
+
+
+
 
   document.addEventListener('keydown', keydown);
   
-
   socket.emit('startGame', JSON.stringify(gameMode));
 }
 
