@@ -40,16 +40,16 @@ const bigIndex=
 
 
 
-//let bidSon = new Audio("Sounds/bid.wav");
+let bidSon = new Audio("Sounds/bid.wav");
 
-let bidSon=document.getElementById("bidSon");
+//let bidSon=document.getElementById("bidSon");
 
 let bsSon = new Audio("Sounds/bs.wav");
 
 
-//let dangSon = new Audio("Sounds/dang.wav");
+let dangSon = new Audio("Sounds/dang.wav");
 
-let dangSon=document.getElementById("dangSon")
+//let dangSon=document.getElementById("dangSon")
 
 
 let deathSon = new Audio ("Sounds/deathContinue.wav")
