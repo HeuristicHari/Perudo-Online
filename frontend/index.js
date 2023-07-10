@@ -54,6 +54,8 @@ const passTurn = document.getElementById("passTurn");
 const bsButton=document.getElementById("bsButton");
 const hhButton=document.getElementById("hhButton");
 
+const troll=document.getElementById("troll");
+
 
 const boxTop=document.getElementById("boxTop");
 
@@ -108,6 +110,8 @@ diePlusThree.addEventListener('click', fDiePlusThree);
 diePlusFive.addEventListener('click', fDiePlusFive);
 diePlusSeven.addEventListener('click', fDiePlusSeven);
 
+troll.addEventListener('click', () => {sounds[13].play()})
+
 
 let canvas, ctx;
 let diceCanvas, ctx2;
@@ -128,11 +132,12 @@ function newGame() {
 function joinGame() {
   const code = gameCodeInput.value;
 
-  let silentSound = new Audio("Sounds/silence.wav");
-  silentSound.autoplay="";
-  silentSound.muted="";
-  silentSound.playsinline="";
-  silentSound.play();
+
+  
+  const test = sounds[13].play();
+  if (test!==undefined){
+    test.then (()=>{}).catch((error)=>troll.display="block")
+  }
 
   socket.emit('joinGame', code);
   init();

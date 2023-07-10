@@ -80,8 +80,9 @@ let gameWin = new Audio ("Sounds/gameWin.wav")
 
 let gameLoss = new Audio ("Sounds/gameLoss.wav")
 
+let silentSound = new Audio("Sounds/silence.wav");
 
-const sounds = [bidSon, bsSon, dangSon, deathSon, dingSon, hhSon, rerollSon, startgameSon, thudSon, thud2Son, thud3Son, gameWin, gameLoss]
+const sounds = [bidSon, bsSon, dangSon, deathSon, dingSon, hhSon, rerollSon, startgameSon, thudSon, thud2Son, thud3Son, gameWin, gameLoss, silentSound]
 
 for (let j=0; j<sounds.length; j++){
     let i=sounds[j];
