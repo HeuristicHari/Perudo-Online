@@ -141,24 +141,7 @@ function joinGame() {
   init();
 }
 function startGame(){
-  var playPromise = sounds[13].play();
-
-  // In browsers that don’t yet support this functionality,
-  // playPromise won’t be defined.
-  if (playPromise !== undefined) {
-      playPromise.then(function() {
-          // Automatic playback started!
-      }).catch(function(error) {
-          console.log(error);
-          console.log("try to reload");
-          sounds[13].load();
-          sounds[13].play();
-      });
-  }
-
-
-
-
+  sounds[13].play();
 
   document.addEventListener('keydown', keydown);
   
