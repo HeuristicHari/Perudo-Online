@@ -82,7 +82,7 @@ let gameWin = new Audio ("Sounds/gameWin.wav")
 
 let gameLoss = new Audio ("Sounds/gameLoss.wav")
 
-let silentSound = new Audio("Sounds/silence.wav");
+let silentSound = new Audio("Sounds/sinister.mp3");
 //let silentSound=document.getElementById("silentSound");
 
 
