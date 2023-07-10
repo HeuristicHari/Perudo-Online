@@ -152,7 +152,7 @@ function startGame(){
           console.log(error);
           console.log("try to reload");
           sounds[13].load();
-          sounds[13].song.play();
+          sounds[13].play();
       });
   }
 
