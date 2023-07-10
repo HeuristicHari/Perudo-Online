@@ -617,7 +617,7 @@ function handleFadeInRect(t){
   ctx.fillRect(525,505,250,100);
 }
 function handleDispDie(die){
-  sounds[8].play();
+  sounds[13].play();
 
   die=JSON.parse(die);
 
