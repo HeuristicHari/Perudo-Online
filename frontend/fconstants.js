@@ -55,32 +55,32 @@ let dangSon = new Audio("Sounds/dang.mp3");
 let deathSon = new Audio ("Sounds/deathContinue.mp3")
 
 
-let dingSon = new Audio ("Sounds/ding.wav")
+let dingSon = new Audio ("Sounds/ding.mp3")
 
 
-let hhSon = new Audio ("Sounds/highHand.wav")
+let hhSon = new Audio ("Sounds/highHand.mp3")
 
 
-let rerollSon = new Audio ("Sounds/reRoll.wav")
+let rerollSon = new Audio ("Sounds/reRoll.mp3")
 
 
-let startgameSon = new Audio ("Sounds/startGame.wav")
+let startgameSon = new Audio ("Sounds/startGame.mp3")
 
 
-let thudSon = new Audio ("Sounds/thud.wav")
+let thudSon = new Audio ("Sounds/thud.mp3")
 
 
-let thud2Son = new Audio ("Sounds/thud2.wav")
+let thud2Son = new Audio ("Sounds/thud2.mp3")
 
 
-let thud3Son = new Audio ("Sounds/thud3.wav")
+let thud3Son = new Audio ("Sounds/thud3.mp3")
 
 
 
-let gameWin = new Audio ("Sounds/gameWin.wav")
+let gameWin = new Audio ("Sounds/gameWin.mp3")
 
 
-let gameLoss = new Audio ("Sounds/gameLoss.wav")
+let gameLoss = new Audio ("Sounds/gameLoss.mp3")
 
 let silentSound = new Audio("Sounds/silence.mp3");
 //let silentSound=document.getElementById("silentSound");
