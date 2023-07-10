@@ -13,7 +13,8 @@ const buttonOn="#B76E79"
 const buttonOff="#470a0a"
 
 
-
+const AudioContext = window.AudioContext || window.webkitAudioContext;
+AudioContext.ambience = new AudioContext();
 
 
 var socket=io("https://gentle-escarpment-00981-44400e4b8206.herokuapp.com/", {transports:['websocket']});
