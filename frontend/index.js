@@ -110,7 +110,7 @@ diePlusThree.addEventListener('click', fDiePlusThree);
 diePlusFive.addEventListener('click', fDiePlusFive);
 diePlusSeven.addEventListener('click', fDiePlusSeven);
 
-
+//bidSon=document.getElementById("bidSon")
 
 
 let canvas, ctx;
@@ -770,7 +770,8 @@ function handlePlaySound(n){
   const m=Number(n);
   if (m==0){
     let tmpAudio = new Audio ("Sounds/bid.wav")
-    tmpAudio.play();
+    //tmpAudio.play();
+    sounds[0].play();
     return;
 
   }
