@@ -82,8 +82,8 @@ let gameWin = new Audio ("Sounds/gameWin.wav")
 
 let gameLoss = new Audio ("Sounds/gameLoss.wav")
 
-//let silentSound = new Audio("Sounds/sinister.mp3");
-let silentSound=document.getElementById("silentSound");
+let silentSound = new Audio("Sounds/silence.mp3");
+//let silentSound=document.getElementById("silentSound");
 
 
 const sounds = [bidSon, bsSon, dangSon, deathSon, dingSon, hhSon, rerollSon, startgameSon, thudSon, thud2Son, thud3Son, gameWin, gameLoss, silentSound]
