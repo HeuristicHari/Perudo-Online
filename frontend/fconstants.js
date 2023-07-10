@@ -85,13 +85,18 @@ let gameLoss = new Audio ("Sounds/gameLoss.wav")
 //let silentSound = new Audio("Sounds/silence.wav");
 let silentSound=document.getElementById("silentSound");
 
+
 const sounds = [bidSon, bsSon, dangSon, deathSon, dingSon, hhSon, rerollSon, startgameSon, thudSon, thud2Son, thud3Son, gameWin, gameLoss, silentSound]
 
 for (let j=0; j<sounds.length; j++){
     let i=sounds[j];
     i.autoplay="";
     i.muted="";
-    i.playsinline=""
+    i.playsInline=true;
+
+    console.log(i);
+    console.log(i.playsInline)
+    console.log(i.muted)
     i.load();
 }
 
