@@ -16,7 +16,7 @@ io.on('connection', client => {
   client.on('joinGame', handleJoinGamep);
   client.on('startGame', handleStartGame);
   client.on('passTurn', handlePassTurn);
-  client.on('eject', handleEject)
+  client.on('eject', handleEject);
   
 
   client.on("log", s=>console.log(s) );
@@ -34,11 +34,18 @@ io.on('connection', client => {
       return; //backButtonSpam
     }
 
-    io.sockets.in(roomName).emit('playSound', '0');
+    //auth
+    if (tmpState.playerIdOrder[tmpState.onWho]!==client.id){
+      client.emit('eReset', "hacker");
+      return;
+    }
+
+
 
 
     hBid=JSON.parse(headeredBidString);
     if (hBid.bs){
+      io.sockets.in(roomName).emit('playSound', '1');
       //call tmpState
       challengedBid=tmpState.previousBid;
       if (challengedBid.hH && tmpState.hhActive==-1){
@@ -120,10 +127,16 @@ io.on('connection', client => {
         io.sockets.in(roomName).emit('playSound', '5');
 
       }
+      else{
+        io.sockets.in(roomName).emit('playSound', '0');
+      }
     }
     //hhActive updated above
 
     //onWho updated below
+    if (!bid.hH){
+      io.sockets.in(roomName).emit('playSound', '0');
+    }
 
   
 
@@ -191,6 +204,13 @@ io.on('connection', client => {
       return;
     }
     perm = makePerm(s);
+
+    newIdStorage = []
+    for (let i=0; i<s; i++){
+      newIdStorage.push(state[roomName].playerIdOrder[perm[i]]);
+    }
+
+    state[roomName].playerIdOrder=newIdStorage;
     
     
     io.sockets.in(roomName).emit('permPaint',JSON.stringify(perm))
@@ -264,6 +284,7 @@ io.on('connection', client => {
     //Specifically, make another room specifically for spectators
     //Control check by making sure opps can only join 5-letter room names
     
+    state[roomName].playerIdOrder[room.size -1]=client.id
     client.emit('init', room.size - 1);
     
   }
@@ -280,6 +301,8 @@ io.on('connection', client => {
     state[roomName] = initGame();
 
     client.join(roomName);
+
+    state[roomName].playerIdOrder[0]=client.id
     
     client.emit('init', 0);
     client.emit ("hostSetup");
@@ -287,7 +310,12 @@ io.on('connection', client => {
 
 
 
+
+
 });
+
+
+///CLIENT FINISHED
 
 function HhChallenge(roomName, highestHand, claimValid){
 t = 0;
@@ -398,12 +426,26 @@ function makePerm(s){
     return perm;
 }
 
+
+
 function emitGameState(roomName, gameState) {
   if (!roomName || !gameState){
     return;
   }
+  obfusState={}
+  obfusState.previousBid=gameState.previousBid;
+  obfusState.gameMode=gameState.gameMode;
+  obfusState.startThis=gameState.startThis;
+  obfusState.onWho=gameState.onWho;
+  obfusState.numPlayers=gameState.numPlayers;
+  obfusState.numPlayersAlive=gameState.numPlayersAlive;
+  obfusState.gameOn=gameState.gameOn;
+  obfusState.hhActive=gameState.hhActive;
+
+
+
   io.sockets.in(roomName)
-    .emit('gameState', JSON.stringify(gameState));
+    .emit('gameState', JSON.stringify(obfusState));
 }
 
 function initState(roomName, obj){
@@ -418,7 +460,7 @@ function initState(roomName, obj){
 
   numDie=mod.gameMode.dieStart;
 
-  orders=[]
+  //orders=[]
   for (let i = 0; i<s; i++){
 
 
@@ -442,7 +484,11 @@ function initState(roomName, obj){
 
       order.push((tmpRand+1))
     }
-    orders.push(order)
+
+    
+    io.to(mod.playerIdOrder[i]).emit('rollDice', JSON.stringify(order))
+    
+
     
     tmpPlayer.dice=dice;
 
@@ -481,15 +527,6 @@ function initState(roomName, obj){
   mod.gameOn=true;
 
 
-
-  io.sockets.in(roomName)
-    .emit('rollDice', JSON.stringify( orders ));
-
- 
-
- 
-  
-
 }
 
 function progressState(roomName, p){
@@ -507,8 +544,6 @@ function progressState(roomName, p){
 
     io.sockets.in(roomName)
     .emit('colorL', JSON.stringify(p), JSON.stringify(mod));
-
-    //should account for full color, might want to recolor if math.pi
     
     woosh = false;
 
@@ -542,14 +577,12 @@ function progressState(roomName, p){
   mod.globalDice=[0,0,0,0,0,0];
 
   
-  orders=[]
   for (let i = 0; i<s; i++){
     tmpPlayer=mod.players[i]
     if (!tmpPlayer.alive){
       tmpPlayer.dice=null;
       tmpPlayer.numDice=0;
 
-      orders.push([])
       continue;
     }
 
@@ -563,7 +596,8 @@ function progressState(roomName, p){
 
       order.push((tmpRand+1))
     }
-      orders.push(order)
+      io.to(mod.playerIdOrder[i]).emit('rollDice', JSON.stringify(order));
+
 
     tmpPlayer.dice=dice;
   }
@@ -616,11 +650,6 @@ function progressState(roomName, p){
   mod.previousBid={num:1, die:0, pNum:bwtf, hH:false};
   mod.hhActive=-1;
 
-
-
-  
-  io.sockets.in(roomName)
-    .emit('rollDice', JSON.stringify( orders ))
 
   
   if (woosh){

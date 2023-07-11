@@ -13,11 +13,11 @@ const buttonOn="#B76E79"
 const buttonOff="#470a0a"
 
 
-const AudioContext = window.AudioContext || window.webkitAudioContext;
-AudioContext.ambience = new AudioContext();
 
 
 var socket=io("https://gentle-escarpment-00981-44400e4b8206.herokuapp.com/", {transports:['websocket']});
+//var socket=io("http://localhost:3000", {transports:['websocket']});
+
 
 socket.on('init', handleInit);
 socket.on('gameState', handleGameState);
@@ -27,7 +27,7 @@ socket.on('gameCode', handleGameCode);
 socket.on("rollDice", handleRollDice);
 
 socket.on("eReset", handleErr)
-socket.on("e", ()=>{})//alert(s)
+socket.on("e", (s)=>{alert(s);})//alert(s)
 
 socket.on('hostSetup', handleHostSetup);
 socket.on('hostUnSetup', handleHostUnSetup);
@@ -126,19 +126,16 @@ let gameMode = {dieStart:3, diePlus:3, onesWild:false, highHand:true,}
 
 function newGame() {
   socket.emit('newGame');
-  init();
+  
 }
 
 function joinGame() {
   const code = gameCodeInput.value;
 
-
-  
   const test = sounds[13].play();
  
-
   socket.emit('joinGame', code);
-  init();
+  
 }
 function startGame(){
   sounds[13].play();
@@ -234,7 +231,10 @@ function init() {
   document.addEventListener('keydown', keydown);
 }
 
-function handleRollDice(orders){
+function handleRollDice(order){
+
+  
+  
   diceContainer.style.display = "inline"
   diceCanvas=document.getElementById('diceCanvas');
  
@@ -244,9 +244,10 @@ function handleRollDice(orders){
 
   ctx2.fillRect(0,0,diceCanvas.width, diceCanvas.height);
 
-  orders=JSON.parse(orders);
 
-  const arrDisp=orders[playerNumber];
+  const arrDisp=JSON.parse(order);
+  
+  
 
   const dispDiceArray=[]
  
@@ -326,6 +327,7 @@ function handleColorL(p, mod){
 function paintGame(state) {
   
   if (state.onWho==playerNumber){
+
     gameScreen.style.display="block"
     if (!state.gameMode.highHand){
       hhButton.style.display="none";
@@ -418,6 +420,7 @@ function paintGame(state) {
 }
 
 function handleInit(number) {
+  init();
   playerNumber = number;
 }
 
@@ -751,13 +754,6 @@ function handleDispHand(highestHand){
 
 function handlePlaySound(n){
   const m=Number(n);
-  if (m==0){
-    let tmpAudio = new Audio ("Sounds/bid.wav")
-    //tmpAudio.play();
-    sounds[0].play();
-    return;
-
-  }
   sounds[m].play();
 }
 
