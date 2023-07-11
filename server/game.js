@@ -16,7 +16,8 @@ function createGameState() {
     players: [],
     globalDice: [0,0,0,0,0,0],
 
-    
+    playerIdOrder: [null,null,null,null,null,null,null,null,null,null],
+
 
     highestHand:{num:120, die:120,},
     

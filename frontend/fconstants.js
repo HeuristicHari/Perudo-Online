@@ -42,50 +42,32 @@ const bigIndex=
 
 let bidSon = new Audio("Sounds/bid.mp3");
 
-//let bidSon=document.getElementById("bidSon");
-
-let bsSon = new Audio("Sounds/bs.wav");
-
+let bsSon = new Audio("Sounds/bs.mp3");
 
 let dangSon = new Audio("Sounds/dang.mp3");
 
-//let dangSon=document.getElementById("dangSon")
-
-
 let deathSon = new Audio ("Sounds/deathContinue.mp3")
-
 
 let dingSon = new Audio ("Sounds/ding.mp3")
 
-
 let hhSon = new Audio ("Sounds/highHand.mp3")
-
 
 let rerollSon = new Audio ("Sounds/reRoll.mp3")
 
-
 let startgameSon = new Audio ("Sounds/startGame.mp3")
-
 
 let thudSon = new Audio ("Sounds/thud.mp3")
 
-
 let thud2Son = new Audio ("Sounds/thud2.mp3")
-
 
 let thud3Son = new Audio ("Sounds/thud3.mp3")
 
-
-
 let gameWin = new Audio ("Sounds/gameWin.mp3")
-
 
 let gameLoss = new Audio ("Sounds/gameLoss.mp3")
 
 let silentSound = new Audio("Sounds/silence.mp3");
 //let silentSound=document.getElementById("silentSound");
-
-
 const sounds = [bidSon, bsSon, dangSon, deathSon, dingSon, hhSon, rerollSon, startgameSon, thudSon, thud2Son, thud3Son, gameWin, gameLoss, silentSound]
 
 for (let j=0; j<sounds.length; j++){
