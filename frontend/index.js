@@ -14,8 +14,8 @@ const buttonOff="#470a0a"
 
 
 
-//var socket=io("https://gentle-escarpment-00981-44400e4b8206.herokuapp.com/", {transports:['websocket']});
-var socket=io("http://localhost:3000", {transports:['websocket']});
+var socket=io("https://gentle-escarpment-00981-44400e4b8206.herokuapp.com/", {transports:['websocket']});
+//var socket=io("http://localhost:3000", {transports:['websocket']});
 
 
 socket.on('init', handleInit);
