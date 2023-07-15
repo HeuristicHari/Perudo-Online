@@ -152,7 +152,7 @@ function passTurnLawl(){
   const h =false;
   const b=false; //header: not always present
    
-  if (!n || !d || d<1 || d>6 || false || n<previousBid.num || n>99 || (n == previousBid.num && d <= previousBid.die )){
+  if (!n || !d || d<1 || d>6  || n<previousBid.num || n>99 || (n == previousBid.num && d <= previousBid.die )){
     sounds[8].play();
     return;
   }

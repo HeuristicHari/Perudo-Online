@@ -7,7 +7,11 @@ const { FRAME_RATE } = require('./constants');
 const state = {};
 const clientRooms = {};
 
-io.on('connection', client => {
+io.on('connection', (client => {
+
+  if (!client){
+    return;
+  }
 
 
   
@@ -24,6 +28,9 @@ io.on('connection', client => {
   
 
   function handlePassTurn(headeredBidString){//has bs property
+
+    try {
+
     roomName = clientRooms[client.id]
     if (!roomName){
       return;
@@ -49,6 +56,12 @@ io.on('connection', client => {
 
 
     hBid=JSON.parse(headeredBidString);
+
+    if (!bhid.num || !hbid.die || hbid.die<1 || hbid.die>6  || hbid.num<tmpState.previousBid.num || hbid.num>99 || (hbid.num == tmpState.previousBid.num && hbid.die <= tmpState.previousBid.die )){
+      return;
+    }
+
+
     if (hBid.bs){
       io.sockets.in(roomName).emit('playSound', '1');
       //call tmpState
@@ -187,12 +200,23 @@ io.on('connection', client => {
      
 
       emitGameState(roomName, state[roomName]);
+
+  } catch (err) {console.log(err)}
     
 
   }
   function handleStartGame(obj){//obj is game mod instructions
 
+    try {
     if (!obj){
+      return;
+    }
+    obj=JSON.parse(obj);
+
+    if (!obj.dieStart || (obj.dieStart!=1 && obj.dieStart!=3 && obj.dieStart!=5 && obj.dieStart!=10)){
+      return;
+    } 
+    if (!obj.diePlus || obj.diePlus<1 || obj.diePlus>7 || obj.diePlus%2==0){
       return;
     }
     
@@ -244,18 +268,33 @@ io.on('connection', client => {
     io.sockets.in(roomName).emit('playSound', '7');
     emitGameState(roomName, state[roomName]);
 
+  } catch (err) {console.log(err);}
 
   }
 
   function handleEject(){
+
+    try {
     roomName=clientRooms[client.id];
-    mod=state[roomName]
-    who=mod.onWho;
-    if (who==0){
+    if (!roomName){
       return;
     }
+    mod=state[roomName];
+    if (!mod){
+      return;
+    }
+    if (state[roomName].playerIdOrder[0]!=client.id){
+      return;
+    }
+    
+    who=mod.onWho;
+    // if (who==0){
+    //   return;
+    // }
+    
     mod.players[who].numDice=mod.gameMode.dieStart+mod.gameMode.diePlus-1;
     progressState(roomName, who);
+  } catch (err) {console.log(err);}
 
   }
 
@@ -263,6 +302,11 @@ io.on('connection', client => {
 
 
   function handleJoinGamep(roomName) {
+
+    try {
+    if (!roomName){
+      return;
+    }
    
     const room = io.sockets.adapter.rooms.get(roomName);
  
@@ -309,7 +353,9 @@ io.on('connection', client => {
     //Specifically, make another room specifically for spectators
     //Control check by making sure opps can only join 5-letter room names
     
-    
+  } catch (err){
+    console.log(err);
+  }
     
     
   }
@@ -317,7 +363,7 @@ io.on('connection', client => {
   function handleNewGamep() {
 
     
-    
+    try {
     let roomName = makeid(5);
 
     clientRooms[client.id] = roomName;//this stores, for every client, the roomName they are currently in.
@@ -331,13 +377,16 @@ io.on('connection', client => {
     
     client.emit('init', 0);
     client.emit ("hostSetup");
+
+    }
+    catch (err){console.log(err);}
   }
 
 
 
 
 
-});
+}));
 
 
 ///CLIENT FINISHED
@@ -473,7 +522,7 @@ function emitGameState(roomName, gameState) {
     .emit('gameState', JSON.stringify(obfusState));
 }
 
-function initState(roomName, obj){
+function initState(roomName, obj){//only called locally, is chill
 
   if (!roomName || !obj){return;}
     
@@ -481,7 +530,7 @@ function initState(roomName, obj){
   if (!mod){ return; }
   s=mod.numPlayers;
 
-  obj=JSON.parse(obj);
+  //obj=JSON.parse(obj);
 
   numDie=mod.gameMode.dieStart;
 
