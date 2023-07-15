@@ -14,8 +14,8 @@ const buttonOff="#470a0a"
 
 
 
-//var socket=io("https://gentle-escarpment-00981-44400e4b8206.herokuapp.com/", {transports:['websocket']});
-var socket=io("http://localhost:3000", {transports:['websocket']});
+var socket=io("https://gentle-escarpment-00981-44400e4b8206.herokuapp.com/", {transports:['websocket']});
+//var socket=io("http://localhost:3000", {transports:['websocket']});
 
 
 socket.on('init', handleInit);
@@ -381,7 +381,7 @@ function paintGame(state) {
 
     const tmpHH = new Image();
     if (state.hhActive>=0){
-      tmpHH.src="./Images/HH.png"
+      tmpHH.src="./Images/hand.png"
     }
     else{
       tmpHH.src="./Images/Die_0.png"
@@ -409,7 +409,7 @@ function paintGame(state) {
   tmpDie.onload= () => {ctx.drawImage(tmpDie, 645 ,387.5 )}
 
   if (state.hhActive >= 0){
-    tmpHH.onload= () => {ctx.drawImage(tmpHH, 720 ,395 )}
+    tmpHH.onload= () => {ctx.drawImage(tmpHH, 705 ,380 )}
 
   }
   
@@ -693,8 +693,8 @@ function handleDispHH(){
   sounds[8].play();
 
   const tmpHH=new Image();
-  tmpHH.src="./Images/HH.png";
-  tmpHH.onload= () => {ctx.drawImage(tmpHH,550 ,535 )}
+  tmpHH.src="./Images/hand.png";
+  tmpHH.onload= () => {ctx.drawImage(tmpHH,535 ,520 )}
 }
 function handleDispHand(highestHand){
 
