@@ -40,6 +40,11 @@ io.on('connection', client => {
       return;
     }
 
+    // console.log(tmpState.playerIdOrder[tmpState.onWho]);
+    // console.log(client.id)
+    // console.log('----')
+
+
 
 
 
@@ -61,7 +66,7 @@ io.on('connection', client => {
           setTimeout(() => { progressState(roomName, hBid.pNum);
           }, 7200)
 
-          //progressState(roomName, hBid.pNum);
+          
           
           return;
         }
@@ -71,7 +76,7 @@ io.on('connection', client => {
           HhChallenge(roomName, tmpState.highestHand, false)
           setTimeout(() => { progressState(roomName, challengedBid.pNum);
           }, 7200)
-          //progressState(roomName, challengedBid.pNum); //old dude wrong
+          
           return;
         }
       }
@@ -92,7 +97,7 @@ io.on('connection', client => {
         Challenge(roomName, challengedBid.die, numExist, false )
         setTimeout(() => { progressState (roomName, tmpState.previousBid.pNum);
         }, 7200)
-        //progressState (roomName, tmpState.previousBid.pNum);
+        
         
 
         return;
@@ -103,7 +108,7 @@ io.on('connection', client => {
         Challenge(roomName, challengedBid.die, numExist, true)
         setTimeout(() => {progressState(roomName, hBid.pNum);
         }, 7200)
-        //progressState(roomName, hBid.pNum);
+        
 
         return;
       }
@@ -185,7 +190,7 @@ io.on('connection', client => {
     
 
   }
-  function handleStartGame(obj){
+  function handleStartGame(obj){//obj is game mod instructions
 
     if (!obj){
       return;
@@ -205,13 +210,29 @@ io.on('connection', client => {
     }
     perm = makePerm(s);
 
+
+    
     newIdStorage = []
+    const clientsInRoom=io.sockets.adapter.rooms.get(roomName);
+    const tmpArray=Array.from(clientsInRoom);
+
+    console.log(tmpArray)
+
+
     for (let i=0; i<s; i++){
-      newIdStorage.push(state[roomName].playerIdOrder[perm[i]]);
+      newIdStorage.push(tmpArray[perm[i]]);
+    }
+    console.log(newIdStorage);
+
+    //newId has the ids in order
+
+    for (let i=0;i<s;i++){
+      io.to(newIdStorage[i]).emit('init', i)
     }
 
     state[roomName].playerIdOrder=newIdStorage;
     
+
     
     io.sockets.in(roomName).emit('permPaint',JSON.stringify(perm))
    
@@ -267,7 +288,10 @@ io.on('connection', client => {
       return;
     } else if (state[roomName].gameOn){
       client.emit("eReset",'gameStarted')
+      return;
     }
+
+    
 
     
 
@@ -279,13 +303,14 @@ io.on('connection', client => {
 
    
 
-    client.emit('gameCode', roomName);
+    io.sockets.in(roomName).emit('gameCode', roomName, room.size+"");
+    client.emit('init', room.size-1)
     //We are incentivized to run some spam to accomodate spectators
     //Specifically, make another room specifically for spectators
     //Control check by making sure opps can only join 5-letter room names
     
-    state[roomName].playerIdOrder[room.size -1]=client.id
-    client.emit('init', room.size - 1);
+    
+    
     
   }
   
@@ -296,7 +321,7 @@ io.on('connection', client => {
     let roomName = makeid(5);
 
     clientRooms[client.id] = roomName;//this stores, for every client, the roomName they are currently in.
-    client.emit('gameCode', roomName);
+    client.emit('gameCode', roomName, '1');
 
     state[roomName] = initGame();
 
