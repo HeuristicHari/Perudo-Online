@@ -15,8 +15,8 @@ const buttonOff="#470a0a"
 
 
 
-var socket=io("https://gentle-escarpment-00981-44400e4b8206.herokuapp.com/", {transports:['websocket']});
-//var socket=io("http://localhost:3000", {transports:['websocket']});
+//var socket=io("https://gentle-escarpment-00981-44400e4b8206.herokuapp.com/", {transports:['websocket']});
+var socket=io("http://localhost:3000", {transports:['websocket']});
 
 
 socket.on('init', handleInit);
@@ -274,7 +274,6 @@ function handlePermPaint(perm){
 
   perm=JSON.parse(perm);
   
-  playerNumber = perm[playerNumber];
   
 
   paintInitGame(perm["size"])
@@ -507,12 +506,12 @@ function handleGameOver(data) {
   )
 }
 
-function handleGameCode(gameCode) {
+function handleGameCode(gameCode,num) {
 
   gameCodeDisplay.innerText = gameCode;
   gameCodeDisplay.backgroundColor="#18313a";
 
-  boxTop.innerText="Join Code: "+gameCodeDisplay.innerText
+  boxTop.innerText="Join Code: "+gameCodeDisplay.innerText+" Number of Players:"+Number(num)
   boxTop.style.color="#ADD8E6";
   boxTop.style.backgroundColor="#8e4162"
 
@@ -604,7 +603,7 @@ function turnOffPlus(){
 
 function handleErr(s) {
   reset();
-  //alert(s);
+  newErr(s);
   
 }
 function newErr(s){
