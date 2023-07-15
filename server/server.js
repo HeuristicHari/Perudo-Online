@@ -28,6 +28,7 @@ io.on('connection', (client => {
   
 
   function handlePassTurn(headeredBidString){//has bs property
+    
 
     try {
 
@@ -57,7 +58,10 @@ io.on('connection', (client => {
 
     hBid=JSON.parse(headeredBidString);
 
-    if (!bhid.num || !hbid.die || hbid.die<1 || hbid.die>6  || hbid.num<tmpState.previousBid.num || hbid.num>99 || (hbid.num == tmpState.previousBid.num && hbid.die <= tmpState.previousBid.die )){
+    if (!hBid.bs && !hBid.hH && (!hBid.num || !hBid.die || hBid.die<1 || hBid.die>6  || hBid.num<tmpState.previousBid.num || hBid.num>99 || (hBid.num == tmpState.previousBid.num && hBid.die <= tmpState.previousBid.die) ) ){
+      console.log(hBid.num);
+      console.log(hBid.die)
+      console.log("lbozo")
       return;
     }
 
@@ -240,13 +244,13 @@ io.on('connection', (client => {
     const clientsInRoom=io.sockets.adapter.rooms.get(roomName);
     const tmpArray=Array.from(clientsInRoom);
 
-    console.log(tmpArray)
+    //console.log(tmpArray)
 
 
     for (let i=0; i<s; i++){
       newIdStorage.push(tmpArray[perm[i]]);
     }
-    console.log(newIdStorage);
+    //console.log(newIdStorage);
 
     //newId has the ids in order
 
